@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { pageTransition } from './motion';
 
-export type NavItem = { to: string; label: string; icon: string; badge?: number };
+export type NavItem = { to: string; label: string; icon: string; badge?: number; tab?: boolean };
 
 function Badge({ n }: { n?: number }) {
   if (!n) return null;
@@ -74,6 +74,24 @@ export function Layout({
 
       <div className="flex min-w-0 flex-1 flex-col">
         {header}
+        <nav
+          aria-label="その他のメニュー"
+          className="flex gap-2 overflow-x-auto px-4 pt-3 md:hidden"
+        >
+          {nav
+            .filter((n) => !n.tab)
+            .map((n) => (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                className={({ isActive }) =>
+                  `glass shrink-0 !rounded-full px-3 py-1 text-xs font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
+                }
+              >
+                {n.label}
+              </NavLink>
+            ))}
+        </nav>
         <main
           id="main"
           className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-4 md:pb-10 md:pt-6"
@@ -103,27 +121,29 @@ export function Layout({
         aria-label="タブバー"
         className="glass fixed inset-x-3 bottom-3 z-40 flex justify-around !rounded-2xl px-1 py-1.5 md:hidden"
       >
-        {nav.slice(0, 5).map((n) => (
-          <NavLink
-            key={n.to}
-            to={n.to}
-            end={n.to === '/'}
-            className={({ isActive }) =>
-              `relative flex min-w-14 flex-col items-center rounded-xl px-2 py-1 text-[11px] font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
-            }
-          >
-            <span aria-hidden="true" className="text-lg leading-6">
-              {n.icon}
-            </span>
-            {n.label}
-            {n.badge ? (
-              <span
-                className="absolute right-1 top-0 size-2 rounded-full bg-accent"
-                aria-label={`未読 ${n.badge}件`}
-              />
-            ) : null}
-          </NavLink>
-        ))}
+        {nav
+          .filter((n) => n.tab)
+          .map((n) => (
+            <NavLink
+              key={n.to}
+              to={n.to}
+              end={n.to === '/'}
+              className={({ isActive }) =>
+                `relative flex min-w-14 flex-col items-center rounded-xl px-2 py-1 text-[11px] font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
+              }
+            >
+              <span aria-hidden="true" className="text-lg leading-6">
+                {n.icon}
+              </span>
+              {n.label}
+              {n.badge ? (
+                <span
+                  className="absolute right-1 top-0 size-2 rounded-full bg-accent"
+                  aria-label={`未読 ${n.badge}件`}
+                />
+              ) : null}
+            </NavLink>
+          ))}
       </nav>
     </div>
   );

@@ -5,6 +5,13 @@ import { originCheck, securityHeaders } from './lib/security';
 import { sessionMiddleware } from './lib/session';
 import { adminRoutes } from './routes/admin';
 import { authRoutes } from './routes/auth';
+import {
+  favoriteRoutes,
+  folderRoutes,
+  notificationRoutes,
+  rankingRoutes,
+  searchRoutes,
+} from './routes/discover';
 import { meRoutes } from './routes/me';
 import { paymentRoutes } from './routes/payments';
 import { feedRoutes, postRoutes } from './routes/posts';
@@ -39,6 +46,11 @@ export function createApp() {
   app.route('/api/requests', requestRoutes);
   app.route('/api/payments', paymentRoutes);
   app.route('/api/admin', adminRoutes);
+  app.route('/api/search', searchRoutes);
+  app.route('/api/rankings', rankingRoutes);
+  app.route('/api/favorites', favoriteRoutes);
+  app.route('/api/folders', folderRoutes);
+  app.route('/api/notifications', notificationRoutes);
   app.route('/media', mediaRoutes);
 
   app.notFound((c) => {
