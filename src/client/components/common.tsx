@@ -105,7 +105,7 @@ export function PostCard({ post }: { post: Post }) {
           <div className="flex items-center gap-2 text-xs text-ink-soft">
             <Avatar name={post.author.displayName} url={post.author.avatarUrl} size={20} />
             <span className="truncate">{post.author.displayName}</span>
-            <span className="ml-auto">♡ {post.saveCount}</span>
+            <span className="ml-auto shrink-0 whitespace-nowrap">♡ {post.saveCount}</span>
           </div>
         </div>
       </Link>

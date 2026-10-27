@@ -27,7 +27,7 @@ export function Tabs<T extends string>({
     <div
       role="tablist"
       aria-label={label}
-      className="glass inline-flex flex-wrap gap-1 !rounded-full p-1"
+      className="glass inline-flex flex-wrap gap-1 self-start !rounded-full p-1"
     >
       {items.map((it, i) => {
         const active = it.value === value;
