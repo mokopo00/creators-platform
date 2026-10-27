@@ -8,15 +8,15 @@
 
 ## 構成
 
-| ディレクトリ | 内容 |
-|---|---|
-| `src/client` | React + Vite + TypeScript のフロントエンド |
+| ディレクトリ | 内容                                                                                    |
+| ------------ | --------------------------------------------------------------------------------------- |
+| `src/client` | React + Vite + TypeScript のフロントエンド                                              |
 | `src/server` | Hono on Cloudflare Workers の API（D1 / KV / R2 / Durable Objects / Workers AI / Cron） |
-| `src/shared` | フロントと API で共有する Zod スキーマ・減額計算 |
-| `migrations` | D1 マイグレーション |
-| `tests/unit` | Vitest 単体テスト |
-| `e2e` | Playwright E2E テスト |
-| `docs` | 仕様・判断記録・法務 TODO・セキュリティ |
+| `src/shared` | フロントと API で共有する Zod スキーマ・減額計算                                        |
+| `migrations` | D1 マイグレーション                                                                     |
+| `tests/unit` | Vitest 単体テスト                                                                       |
+| `e2e`        | Playwright E2E テスト                                                                   |
+| `docs`       | 仕様・判断記録・法務 TODO・セキュリティ                                                 |
 
 ## 開発
 
@@ -31,6 +31,7 @@ npm run test:e2e             # E2E（ローカルの wrangler dev に対して�
 
 ## ドキュメント
 
+- [docs/HANDOFF.md](docs/HANDOFF.md) — 現在の状態と作業の再開方法
 - [docs/SPEC.md](docs/SPEC.md) — 実装フェーズと受け入れ基準
 - [docs/TECH_DECISIONS.md](docs/TECH_DECISIONS.md) — 技術選定
 - [docs/DECISIONS.md](docs/DECISIONS.md) — 判断記録
