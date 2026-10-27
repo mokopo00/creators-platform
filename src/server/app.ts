@@ -20,6 +20,7 @@ import {
   productRoutes,
   promotionRoutes,
 } from './routes/extras';
+import { accountRoutes, legalRoutes, reportRoutes } from './routes/legal';
 import { meRoutes } from './routes/me';
 import { paymentRoutes } from './routes/payments';
 import { feedRoutes, postRoutes } from './routes/posts';
@@ -46,11 +47,14 @@ export function createApp() {
   app.get('/api/health', (c) => c.json({ ok: true, environment: c.env.ENVIRONMENT }));
   app.route('/api/auth', authRoutes);
   app.route('/api/me', meRoutes);
+  app.route('/api/me', accountRoutes);
   app.route('/api/me', profileRoutes);
   app.route('/api/me/analytics', analyticsRoutes);
   app.route('/api/me/products', productRoutes);
   app.route('/api/me/age-confirmation', ageRoutes);
   app.route('/api/premium', premiumRoutes);
+  app.route('/api/legal', legalRoutes);
+  app.route('/api/reports', reportRoutes);
   app.route('/api/promotions', promotionRoutes);
   app.route('/api/users', userRoutes);
   app.route('/api/posts', postRoutes);

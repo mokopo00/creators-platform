@@ -4,6 +4,7 @@ import { useMe } from './lib/auth';
 import { CreatorToolsPage } from './pages/CreatorToolsPage';
 import { FavoritesPage, FolderPage } from './pages/FavoritesPage';
 import { HomePage } from './pages/HomePage';
+import { PrivacyPage, TermsPage, TokushohoPage } from './pages/LegalPages';
 import { LoginPage } from './pages/LoginPage';
 import { MockCheckoutPage } from './pages/MockCheckoutPage';
 import { NotificationsPage } from './pages/NotificationsPage';
@@ -11,6 +12,7 @@ import { PostDetailPage } from './pages/PostDetailPage';
 import { PostEditorPage } from './pages/PostEditorPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { RankingPage } from './pages/RankingPage';
+import { ReportPage } from './pages/ReportPage';
 import { RequestDetailPage } from './pages/RequestDetailPage';
 import { RequestPage } from './pages/RequestPage';
 import { RequestsPage } from './pages/RequestsPage';
@@ -61,6 +63,10 @@ export function App() {
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/creator" element={<CreatorToolsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/legal/terms" element={<TermsPage />} />
+        <Route path="/legal/privacy" element={<PrivacyPage />} />
+        <Route path="/legal/tokushoho" element={<TokushohoPage />} />
+        <Route path="/report" element={<ReportPage />} />
         <Route path="*" element={<p className="glass p-6 text-center">ページが見つかりません</p>} />
       </Routes>
       <Chatbot />
