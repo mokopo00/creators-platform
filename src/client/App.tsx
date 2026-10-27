@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Chatbot } from './components/Chatbot';
 import { useMe } from './lib/auth';
+import { CreatorToolsPage } from './pages/CreatorToolsPage';
 import { FavoritesPage, FolderPage } from './pages/FavoritesPage';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
@@ -36,6 +37,7 @@ export function App() {
     user
       ? { to: `/u/${user.handle}`, label: 'マイページ', icon: '☺', tab: true }
       : { to: '/login', label: 'ログイン', icon: '→', tab: true },
+    { to: '/creator', label: 'クリエイター', icon: '▤' },
     { to: '/settings', label: '設定', icon: '⚙' },
   ];
 
@@ -57,6 +59,7 @@ export function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/favorites/folders/:id" element={<FolderPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/creator" element={<CreatorToolsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<p className="glass p-6 text-center">ページが見つかりません</p>} />
       </Routes>

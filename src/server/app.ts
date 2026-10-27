@@ -13,6 +13,13 @@ import {
   rankingRoutes,
   searchRoutes,
 } from './routes/discover';
+import {
+  ageRoutes,
+  analyticsRoutes,
+  premiumRoutes,
+  productRoutes,
+  promotionRoutes,
+} from './routes/extras';
 import { meRoutes } from './routes/me';
 import { paymentRoutes } from './routes/payments';
 import { feedRoutes, postRoutes } from './routes/posts';
@@ -40,6 +47,11 @@ export function createApp() {
   app.route('/api/auth', authRoutes);
   app.route('/api/me', meRoutes);
   app.route('/api/me', profileRoutes);
+  app.route('/api/me/analytics', analyticsRoutes);
+  app.route('/api/me/products', productRoutes);
+  app.route('/api/me/age-confirmation', ageRoutes);
+  app.route('/api/premium', premiumRoutes);
+  app.route('/api/promotions', promotionRoutes);
   app.route('/api/users', userRoutes);
   app.route('/api/posts', postRoutes);
   app.route('/api/feed', feedRoutes);

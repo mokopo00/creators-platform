@@ -5,6 +5,7 @@ import { first, run } from '../lib/db';
 import { HttpError, notFound } from '../lib/errors';
 import { getPaymentProvider, verifyStripeSignature } from '../lib/payments';
 import { markPaid } from '../lib/requests';
+import { activatePremium } from './extras';
 import { requireUser } from '../lib/session';
 import { parseJson } from '../lib/validate';
 
@@ -27,7 +28,11 @@ paymentRoutes.post('/webhook', async (c) => {
   if (event.type === 'checkout.session.completed') {
     const s = event.data.object;
     const requestId = s.metadata?.request_id;
-    if (requestId && s.payment_intent) await markPaid(c.env, requestId, s.id, s.payment_intent);
+    if (requestId?.startsWith('premium_')) {
+      await activatePremium(c.env, requestId.slice('premium_'.length), s.id);
+    } else if (requestId && s.payment_intent) {
+      await markPaid(c.env, requestId, s.id, s.payment_intent);
+    }
   }
   return c.json({ received: true });
 });
