@@ -3,9 +3,12 @@ import type { AppBindings } from './env';
 import { HttpError } from './lib/errors';
 import { originCheck, securityHeaders } from './lib/security';
 import { sessionMiddleware } from './lib/session';
+import { adminRoutes } from './routes/admin';
 import { authRoutes } from './routes/auth';
 import { meRoutes } from './routes/me';
+import { paymentRoutes } from './routes/payments';
 import { feedRoutes, postRoutes } from './routes/posts';
+import { requestRoutes } from './routes/requests';
 import { mediaRoutes, uploadRoutes } from './routes/uploads';
 import { profileRoutes, userRoutes } from './routes/users';
 
@@ -33,6 +36,9 @@ export function createApp() {
   app.route('/api/posts', postRoutes);
   app.route('/api/feed', feedRoutes);
   app.route('/api/uploads', uploadRoutes);
+  app.route('/api/requests', requestRoutes);
+  app.route('/api/payments', paymentRoutes);
+  app.route('/api/admin', adminRoutes);
   app.route('/media', mediaRoutes);
 
   app.notFound((c) => {

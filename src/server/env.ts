@@ -26,6 +26,7 @@ export interface Env {
   PREMIUM_PRICE_TAX_LABEL?: string;
   PLATFORM_FEE_RATE?: string;
   DIGITAL_SALES_FEE_RATE?: string;
+  ADMIN_HANDLES?: string;
   BUSINESS_NAME?: string;
   BUSINESS_ADDRESS?: string;
   BUSINESS_PHONE?: string;
