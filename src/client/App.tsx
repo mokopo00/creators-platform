@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { Chatbot } from './components/Chatbot';
 import { useMe } from './lib/auth';
 import { FavoritesPage, FolderPage } from './pages/FavoritesPage';
 import { HomePage } from './pages/HomePage';
@@ -59,6 +60,7 @@ export function App() {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<p className="glass p-6 text-center">ページが見つかりません</p>} />
       </Routes>
+      <Chatbot />
     </Layout>
   );
 }

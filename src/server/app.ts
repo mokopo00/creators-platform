@@ -4,6 +4,7 @@ import { HttpError } from './lib/errors';
 import { originCheck, securityHeaders } from './lib/security';
 import { sessionMiddleware } from './lib/session';
 import { adminRoutes } from './routes/admin';
+import { aiRoutes } from './routes/ai';
 import { authRoutes } from './routes/auth';
 import {
   favoriteRoutes,
@@ -46,6 +47,7 @@ export function createApp() {
   app.route('/api/requests', requestRoutes);
   app.route('/api/payments', paymentRoutes);
   app.route('/api/admin', adminRoutes);
+  app.route('/api/ai', aiRoutes);
   app.route('/api/search', searchRoutes);
   app.route('/api/rankings', rankingRoutes);
   app.route('/api/favorites', favoriteRoutes);
