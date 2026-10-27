@@ -114,3 +114,19 @@ describe('authentication', () => {
     expect(res.headers.get('permissions-policy')).toBeTruthy();
   });
 });
+
+describe('dev-only helpers', () => {
+  it('are not available on staging', async () => {
+    const { client } = setup({ ENVIRONMENT: 'staging' });
+    const c = client();
+    expect((await c.post('/api/admin/dev/run-daily', { today: '2026-01-01' })).status).toBe(404);
+    expect(
+      (
+        await c.post('/api/admin/dev/due-date', {
+          requestId: '00000000-0000-0000-0000-000000000000',
+          dueDate: '2026-01-01',
+        })
+      ).status,
+    ).toBe(404);
+  });
+});

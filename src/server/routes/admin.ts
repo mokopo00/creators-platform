@@ -90,3 +90,17 @@ adminRoutes.post('/dev/run-daily', async (c) => {
   const { today } = await parseJson(c, z.object({ today: dateSchema }));
   return c.json(await runDailyJobs(c.env, today));
 });
+
+/** Development/test helper: moves a request's due date (simulates the passage of time in E2E). */
+adminRoutes.post('/dev/due-date', async (c) => {
+  if (!isDevLike(c.env)) throw notFound();
+  const b = await parseJson(c, z.object({ requestId: idSchema, dueDate: dateSchema }));
+  const n = await run(
+    c.env.DB,
+    'UPDATE requests SET due_date = ? WHERE id = ?',
+    b.dueDate,
+    b.requestId,
+  );
+  if (n === 0) throw notFound();
+  return c.json({ ok: true });
+});

@@ -18,6 +18,7 @@ const CSP = [
 
 export const securityHeaders: MiddlewareHandler<AppBindings> = async (c, next) => {
   await next();
+  if (c.res.status === 101) return; // WebSocket upgrade responses have immutable headers
   const h = c.res.headers;
   h.set('Content-Security-Policy', CSP);
   h.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains');

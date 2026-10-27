@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { Chatbot } from './components/Chatbot';
 import { useMe } from './lib/auth';
 import { CreatorToolsPage } from './pages/CreatorToolsPage';
@@ -19,9 +20,11 @@ import { RequestsPage } from './pages/RequestsPage';
 import { SearchPage } from './pages/SearchPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { Layout, type NavItem } from './ui/Layout';
+import { pageTransition } from './ui/motion';
 
 export function App() {
   const me = useMe();
+  const location = useLocation();
   const user = me.data?.user;
   const nav: NavItem[] = [
     { to: '/', label: 'ホーム', icon: '⌂', tab: true },
@@ -45,30 +48,44 @@ export function App() {
 
   return (
     <Layout nav={nav}>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/ranking" element={<RankingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/u/:handle" element={<ProfilePage />} />
-        <Route path="/u/:handle/request" element={<RequestPage />} />
-        <Route path="/posts/new" element={<PostEditorPage />} />
-        <Route path="/posts/:id" element={<PostDetailPage />} />
-        <Route path="/posts/:id/edit" element={<PostEditorPage />} />
-        <Route path="/requests" element={<RequestsPage />} />
-        <Route path="/requests/:id" element={<RequestDetailPage />} />
-        <Route path="/checkout/mock/:sessionId" element={<MockCheckoutPage />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/favorites/folders/:id" element={<FolderPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/creator" element={<CreatorToolsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/legal/terms" element={<TermsPage />} />
-        <Route path="/legal/privacy" element={<PrivacyPage />} />
-        <Route path="/legal/tokushoho" element={<TokushohoPage />} />
-        <Route path="/report" element={<ReportPage />} />
-        <Route path="*" element={<p className="glass p-6 text-center">ページが見つかりません</p>} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={location.pathname}
+          variants={pageTransition}
+          initial="initial"
+          animate="enter"
+          exit="exit"
+        >
+          {/* A frozen location keeps the exiting page intact during its exit animation. */}
+          <Routes location={location}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/ranking" element={<RankingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/u/:handle" element={<ProfilePage />} />
+            <Route path="/u/:handle/request" element={<RequestPage />} />
+            <Route path="/posts/new" element={<PostEditorPage />} />
+            <Route path="/posts/:id" element={<PostDetailPage />} />
+            <Route path="/posts/:id/edit" element={<PostEditorPage />} />
+            <Route path="/requests" element={<RequestsPage />} />
+            <Route path="/requests/:id" element={<RequestDetailPage />} />
+            <Route path="/checkout/mock/:sessionId" element={<MockCheckoutPage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/favorites/folders/:id" element={<FolderPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/creator" element={<CreatorToolsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/legal/terms" element={<TermsPage />} />
+            <Route path="/legal/privacy" element={<PrivacyPage />} />
+            <Route path="/legal/tokushoho" element={<TokushohoPage />} />
+            <Route path="/report" element={<ReportPage />} />
+            <Route
+              path="*"
+              element={<p className="glass p-6 text-center">ページが見つかりません</p>}
+            />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
       <Chatbot />
     </Layout>
   );

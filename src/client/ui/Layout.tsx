@@ -1,7 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import type { ReactNode } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { pageTransition } from './motion';
+import { Link, NavLink } from 'react-router-dom';
 
 export type NavItem = { to: string; label: string; icon: string; badge?: number; tab?: boolean };
 
@@ -23,7 +21,6 @@ export function Layout({
   children: ReactNode;
   header?: ReactNode;
 }) {
-  const location = useLocation();
   return (
     <div className="min-h-screen md:flex">
       <a
@@ -96,17 +93,7 @@ export function Layout({
           id="main"
           className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-4 md:pb-10 md:pt-6"
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
-              variants={pageTransition}
-              initial="initial"
-              animate="enter"
-              exit="exit"
-            >
-              {children}
-            </motion.div>
-          </AnimatePresence>
+          {children}
           <footer className="mt-10 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink-soft md:hidden">
             <Link to="/legal/terms">利用規約</Link>
             <Link to="/legal/privacy">プライバシーポリシー</Link>

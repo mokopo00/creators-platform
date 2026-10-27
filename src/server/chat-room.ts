@@ -34,7 +34,11 @@ export class ChatRoom extends DurableObject {
     if (message === 'ping') ws.send('pong');
   }
 
-  async webSocketClose(ws: WebSocket, code: number): Promise<void> {
-    ws.close(code, 'closed');
+  async webSocketClose(ws: WebSocket): Promise<void> {
+    try {
+      ws.close(1000, 'closed');
+    } catch {
+      // already closed
+    }
   }
 }

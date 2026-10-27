@@ -4,8 +4,11 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 
 export default tseslint.config(
-  { ignores: ['dist', '.wrangler', 'node_modules', 'playwright-report', 'test-results', '.tsbuild'] },
+  {
+    ignores: ['dist', '.wrangler', 'node_modules', 'playwright-report', 'test-results', '.tsbuild'],
+  },
   js.configs.recommended,
+  { files: ['**/*.mjs'], languageOptions: { globals: globals.node } },
   ...tseslint.configs.recommended,
   {
     files: ['**/*.{ts,tsx}'],
