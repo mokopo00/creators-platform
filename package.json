@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
-    "preview": "npm run build && wrangler dev --port 8787"
+    "preview": "npm run build && wrangler dev --port 8787",
+    "check": "npm run lint && npm run typecheck && npm test"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.105.0",

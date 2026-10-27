@@ -17,8 +17,7 @@ export const AI_MODELS = {
 } as const;
 
 const TIMEOUT_MS = 15_000;
-const LANG_NAMES = { ja: 'japanese', en: 'english', zh: 'chinese', ko: 'korean' } as const;
-export type Lang = keyof typeof LANG_NAMES;
+export type Lang = 'ja' | 'en' | 'zh' | 'ko';
 
 export const aiUnavailable = () =>
   new HttpError(
@@ -28,17 +27,18 @@ export const aiUnavailable = () =>
   );
 
 async function withTimeout<T>(p: Promise<T>): Promise<T> {
-  let timer: ReturnType<typeof setTimeout> | undefined;
+  let cancel = () => {};
   const timeout = new Promise<never>((_, reject) => {
-    timer = setTimeout(
+    const t = setTimeout(
       () => reject(new HttpError(504, 'ai_timeout', 'AI の応答がタイムアウトしました')),
       TIMEOUT_MS,
     );
+    cancel = () => clearTimeout(t);
   });
   try {
     return await Promise.race([p, timeout]);
   } finally {
-    clearTimeout(timer);
+    cancel();
   }
 }
 
