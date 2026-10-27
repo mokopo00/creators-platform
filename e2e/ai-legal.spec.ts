@@ -111,9 +111,12 @@ test.describe('受け入れ基準: 法務・リポジトリ', () => {
   test('個人情報・秘密情報がリポジトリ内に存在せず、author に個人のメールアドレスが無い', () => {
     const grep = (pattern: string) => {
       try {
-        return execSync(`git grep -nIiE "${pattern}" -- . ":!docs/SECURITY.md"`, {
-          encoding: 'utf8',
-        });
+        return execSync(
+          `git grep -nIiE "${pattern}" -- . ":!docs/SECURITY.md" ":!e2e/ai-legal.spec.ts"`,
+          {
+            encoding: 'utf8',
+          },
+        );
       } catch {
         return ''; // git grep exits 1 when nothing matches
       }
