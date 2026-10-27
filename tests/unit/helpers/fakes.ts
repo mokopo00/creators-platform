@@ -102,16 +102,23 @@ export function createKV(): KVNamespace {
 }
 
 export function createR2(): R2Bucket {
-  const store = new Map<string, { body: Uint8Array; contentType?: string }>();
+  const store = new Map<
+    string,
+    { body: Uint8Array; contentType?: string; customMetadata?: Record<string, string> }
+  >();
   const r2 = {
     put: async (
       key: string,
       value: ArrayBuffer | Uint8Array,
-      opts?: { httpMetadata?: { contentType?: string } },
+      opts?: {
+        httpMetadata?: { contentType?: string };
+        customMetadata?: Record<string, string>;
+      },
     ) => {
       store.set(key, {
         body: value instanceof Uint8Array ? value : new Uint8Array(value),
         contentType: opts?.httpMetadata?.contentType,
+        customMetadata: opts?.customMetadata,
       });
       return { key };
     },
@@ -128,7 +135,10 @@ export function createR2(): R2Bucket {
         httpEtag: '"x"',
       };
     },
-    head: async (key: string) => (store.has(key) ? { key } : null),
+    head: async (key: string) => {
+      const v = store.get(key);
+      return v ? { key, customMetadata: v.customMetadata ?? {} } : null;
+    },
     delete: async (key: string | string[]) => {
       for (const k of Array.isArray(key) ? key : [key]) store.delete(k);
     },

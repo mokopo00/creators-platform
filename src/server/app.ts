@@ -5,6 +5,9 @@ import { originCheck, securityHeaders } from './lib/security';
 import { sessionMiddleware } from './lib/session';
 import { authRoutes } from './routes/auth';
 import { meRoutes } from './routes/me';
+import { feedRoutes, postRoutes } from './routes/posts';
+import { mediaRoutes, uploadRoutes } from './routes/uploads';
+import { profileRoutes, userRoutes } from './routes/users';
 
 export function createApp() {
   const app = new Hono<AppBindings>();
@@ -25,6 +28,12 @@ export function createApp() {
   app.get('/api/health', (c) => c.json({ ok: true, environment: c.env.ENVIRONMENT }));
   app.route('/api/auth', authRoutes);
   app.route('/api/me', meRoutes);
+  app.route('/api/me', profileRoutes);
+  app.route('/api/users', userRoutes);
+  app.route('/api/posts', postRoutes);
+  app.route('/api/feed', feedRoutes);
+  app.route('/api/uploads', uploadRoutes);
+  app.route('/media', mediaRoutes);
 
   app.notFound((c) => {
     if (c.req.path.startsWith('/api/')) {
