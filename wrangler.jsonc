@@ -1,0 +1,40 @@
+{
+  // Local development / automated tests use the top-level config (no remote
+  // bindings, mock auth allowed). Staging is `--env staging`. There is no
+  // production environment on purpose (see CLAUDE.md 8-4).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "creators-platform-dev",
+  "main": "src/server/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/media/*"],
+  },
+  "vars": {
+    "ENVIRONMENT": "development",
+    "APP_ORIGIN": "http://localhost:8787",
+    "MOCK_AUTH": "true",
+    "ALLOW_AI_GENERATED": "false",
+    "PREMIUM_PRICE_JPY": "800",
+    "PREMIUM_PRICE_TAX_LABEL": "税込",
+    "PLATFORM_FEE_RATE": "0.10",
+    "DIGITAL_SALES_FEE_RATE": "0.15",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "creators-dev",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "kv_namespaces": [{ "binding": "KV", "id": "00000000000000000000000000000000" }],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "creators-dev-media" }],
+  "durable_objects": { "bindings": [{ "name": "CHAT", "class_name": "ChatRoom" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatRoom"] }],
+  "triggers": { "crons": ["0 15 * * *"] },
+  "observability": { "enabled": true },
+}

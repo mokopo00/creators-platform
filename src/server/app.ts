@@ -1,0 +1,38 @@
+import { Hono } from 'hono';
+import type { AppBindings } from './env';
+import { HttpError } from './lib/errors';
+import { originCheck, securityHeaders } from './lib/security';
+import { sessionMiddleware } from './lib/session';
+import { authRoutes } from './routes/auth';
+import { meRoutes } from './routes/me';
+
+export function createApp() {
+  const app = new Hono<AppBindings>();
+
+  app.use('*', securityHeaders);
+  app.use('/api/*', originCheck);
+  app.use('/api/*', sessionMiddleware);
+
+  app.onError((err, c) => {
+    if (err instanceof HttpError) {
+      return c.json({ error: { code: err.code, message: err.message } }, err.status);
+    }
+    // Never log request bodies, tokens or personal data.
+    console.error('unhandled_error', err instanceof Error ? err.name : 'unknown');
+    return c.json({ error: { code: 'internal', message: 'サーバーでエラーが発生しました' } }, 500);
+  });
+
+  app.get('/api/health', (c) => c.json({ ok: true, environment: c.env.ENVIRONMENT }));
+  app.route('/api/auth', authRoutes);
+  app.route('/api/me', meRoutes);
+
+  app.notFound((c) => {
+    if (c.req.path.startsWith('/api/')) {
+      return c.json({ error: { code: 'not_found', message: '見つかりません' } }, 404);
+    }
+    // SPA fallback is handled by Workers static assets (not_found_handling).
+    return c.env.ASSETS ? c.env.ASSETS.fetch(c.req.raw) : c.text('Not found', 404);
+  });
+
+  return app;
+}

@@ -1,5 +1,14 @@
+import { createApp } from './app';
+import type { Env } from './env';
+import { runDailyJobs } from './jobs';
+
+export { ChatRoom } from './chat-room';
+
+const app = createApp();
+
 export default {
-  async fetch(): Promise<Response> {
-    return new Response('ok');
+  fetch: app.fetch,
+  async scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext) {
+    ctx.waitUntil(runDailyJobs(env));
   },
-};
+} satisfies ExportedHandler<Env>;
