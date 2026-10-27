@@ -41,7 +41,7 @@ export function Tabs<T extends string>({
             tabIndex={active ? 0 : -1}
             onKeyDown={(e) => onKey(e, i)}
             onClick={() => onChange(it.value)}
-            className={`relative rounded-full px-4 py-1.5 text-sm font-medium ${active ? 'text-white' : 'text-ink-soft hover:text-ink'}`}
+            className={`relative inline-flex h-8 items-center rounded-full px-4 text-sm font-medium ${active ? 'text-white' : 'text-ink-soft hover:text-ink'}`}
           >
             {active && (
               <motion.span

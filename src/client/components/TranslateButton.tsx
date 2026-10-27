@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useId, useState } from 'react';
 import { errorMessage, post } from '../lib/api';
+import { Icon } from '../ui/Icon';
 
 const TARGETS = [
   { value: 'ja', label: '日本語' },
@@ -26,7 +27,7 @@ export function TranslateButton({ text }: { text: string }) {
           id={id}
           value={target}
           onChange={(e) => setTarget(e.target.value)}
-          className="rounded-lg border border-white/90 bg-white/70 px-1 py-0.5"
+          className="h-6 rounded-lg border border-white/90 bg-white/70 px-1"
         >
           {TARGETS.map((t) => (
             <option key={t.value} value={t.value}>
@@ -38,8 +39,9 @@ export function TranslateButton({ text }: { text: string }) {
           type="button"
           onClick={() => m.mutate()}
           disabled={m.isPending}
-          className="font-semibold text-accent hover:underline disabled:opacity-50"
+          className="inline-flex h-6 items-center gap-1 font-semibold text-accent hover:underline disabled:opacity-50"
         >
+          <Icon name="translate" size="sm" />
           {m.isPending ? '翻訳中…' : '翻訳する'}
         </button>
       </div>

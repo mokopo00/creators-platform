@@ -6,6 +6,7 @@ import { api, del, errorMessage, post } from '../lib/api';
 import { useMe } from '../lib/auth';
 import type { Post } from '../lib/types';
 import { Button } from '../ui/Button';
+import { Icon } from '../ui/Icon';
 import { Input } from '../ui/Input';
 import { PageSkeleton } from '../ui/Skeleton';
 import { useToast } from '../ui/Toast';
@@ -45,7 +46,7 @@ export function FavoritesPage() {
     <div data-testid="favorites-page" className="flex flex-col gap-5">
       <PageTitle>お気に入り</PageTitle>
       <section aria-labelledby="folders-h" className="glass flex flex-col gap-3 p-4">
-        <h2 id="folders-h" className="font-bold">
+        <h2 id="folders-h" className="text-base font-bold">
           保存フォルダ
         </h2>
         <ul className="flex flex-wrap gap-2">
@@ -53,8 +54,9 @@ export function FavoritesPage() {
             <li key={f.id}>
               <Link
                 to={`/favorites/folders/${f.id}`}
-                className="glass block !rounded-full px-4 py-1.5 text-sm font-medium"
+                className="glass inline-flex h-8 items-center gap-1.5 !rounded-full px-3 text-xs font-semibold"
               >
+                <Icon name="folder" size="sm" />
                 {f.name} <span className="text-ink-soft">({f.count})</span>
               </Link>
             </li>

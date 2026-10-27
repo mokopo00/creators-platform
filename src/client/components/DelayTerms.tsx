@@ -9,7 +9,7 @@ export function DelayTerms() {
       aria-labelledby="delay-terms"
       data-testid="delay-terms"
     >
-      <h2 id="delay-terms" className="font-bold">
+      <h2 id="delay-terms" className="text-base font-bold">
         納期遅延時の減額・返金条件
       </h2>
       <ul className="list-disc space-y-1 pl-5">

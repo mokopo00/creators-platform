@@ -45,14 +45,17 @@ test.describe('受け入れ基準: 投稿・探索', () => {
     const viewer = await (await browser.newContext()).newPage();
     await login(creatorPage, handle('test-rank-creator'));
     await login(viewer, handle('test-rank-viewer'));
-    const tag = `rank${Date.now().toString(36)}`;
+    const run = Date.now().toString(36);
+    const tag = `rank${run}`;
+    const A = `絞り込みA-${run}`;
+    const B = `絞り込みB-${run}`;
     const a = await createPostApi(creatorPage, {
-      title: '絞り込みA',
+      title: A,
       field: '3dcg',
       hashtags: [tag],
     });
     const b = await createPostApi(creatorPage, {
-      title: '絞り込みB',
+      title: B,
       field: 'manga',
       hashtags: ['other'],
     });
@@ -63,19 +66,19 @@ test.describe('受け入れ基準: 投稿・探索', () => {
       .getByRole('group', { name: '分野で絞り込み' })
       .getByRole('button', { name: '3DCG' })
       .click();
-    await expect(viewer.getByText('絞り込みA')).toBeVisible();
-    await expect(viewer.getByText('絞り込みB')).toHaveCount(0);
+    await expect(viewer.getByText(A)).toBeVisible();
+    await expect(viewer.getByText(B)).toHaveCount(0);
     // Hashtag filter (from a post's hashtag link)
     await viewer.goto(`/posts/${a}`);
     await viewer.getByRole('link', { name: `#${tag}` }).click();
     await expect(viewer.getByText(`#${tag}`)).toBeVisible();
-    await expect(viewer.getByText('絞り込みA')).toBeVisible();
-    await expect(viewer.getByText('絞り込みB')).toHaveCount(0);
+    await expect(viewer.getByText(A)).toBeVisible();
+    await expect(viewer.getByText(B)).toHaveCount(0);
 
     // Views/saves then the daily Cron job builds the weekly ranking
     await viewer.goto(`/posts/${b}`);
-    await viewer.getByRole('button', { name: '♡ お気に入り' }).click();
-    await expect(viewer.getByRole('button', { name: '♥ お気に入り済み' })).toBeVisible();
+    await viewer.getByRole('button', { name: 'お気に入り', exact: true }).click();
+    await expect(viewer.getByRole('button', { name: 'お気に入り済み' })).toBeVisible();
     await apiPost(viewer.request, '/api/admin/dev/run-daily', { today: jstDate(0) });
     await viewer.goto('/ranking');
     await expect(viewer.getByRole('tab', { name: '週間' })).toHaveAttribute(
@@ -84,10 +87,10 @@ test.describe('受け入れ基準: 投稿・探索', () => {
     );
     const list = viewer.getByTestId('ranking-list');
     await expect(list).toBeVisible();
-    await expect(list.getByText('絞り込みB')).toBeVisible();
-    await expect(list.getByLabel('1位')).toBeVisible();
+    await expect(list.getByText(B)).toBeVisible();
+    await expect(list.getByLabel('1位', { exact: true })).toBeVisible();
     // Hashtag ranking
     await viewer.goto(`/ranking?tag=${tag}`);
-    await expect(viewer.getByTestId('ranking-list').getByText('絞り込みA')).toBeVisible();
+    await expect(viewer.getByTestId('ranking-list').getByText(A)).toBeVisible();
   });
 });

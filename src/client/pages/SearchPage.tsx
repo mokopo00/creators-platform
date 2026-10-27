@@ -105,7 +105,7 @@ export function SearchPage() {
         <>
           {result.data.creators.length > 0 && (
             <section className="mb-4" aria-labelledby="creators-h">
-              <h2 id="creators-h" className="mb-2 font-bold">
+              <h2 id="creators-h" className="mb-2 text-base font-bold">
                 クリエイター
               </h2>
               <ul className="flex flex-wrap gap-2">
@@ -113,9 +113,9 @@ export function SearchPage() {
                   <li key={c.handle}>
                     <Link
                       to={`/u/${c.handle}`}
-                      className="glass flex items-center gap-2 !rounded-full px-3 py-1.5 text-sm"
+                      className="glass flex h-10 items-center gap-2 !rounded-full pl-1.5 pr-4 text-sm font-medium"
                     >
-                      <Avatar name={c.displayName} url={c.avatarUrl} size={24} />
+                      <Avatar name={c.displayName} url={c.avatarUrl} size="sm" />
                       {c.displayName}
                     </Link>
                   </li>

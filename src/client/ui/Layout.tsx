@@ -1,12 +1,20 @@
 import type { ReactNode } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { Icon, type IconName } from './Icon';
 
-export type NavItem = { to: string; label: string; icon: string; badge?: number; tab?: boolean };
+export type NavItem = { to: string; label: string; icon: IconName; badge?: number; tab?: boolean };
+
+const LEGAL_LINKS = [
+  { to: '/legal/terms', label: '利用規約' },
+  { to: '/legal/privacy', label: 'プライバシーポリシー' },
+  { to: '/legal/tokushoho', label: '特定商取引法に基づく表記' },
+  { to: '/report', label: '通報・削除申立' },
+];
 
 function Badge({ n }: { n?: number }) {
   if (!n) return null;
   return (
-    <span className="ml-auto rounded-full bg-accent px-1.5 text-[10px] font-bold text-white">
+    <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-xs font-semibold tabular-nums text-white">
       {n > 99 ? '99+' : n}
     </span>
   );
@@ -32,40 +40,39 @@ export function Layout({
       <aside
         data-testid="sidebar"
         aria-label="サイドバー"
-        className="glass sticky top-4 m-4 hidden h-[calc(100vh-2rem)] w-56 shrink-0 flex-col gap-1 p-3 md:flex"
+        className="glass sticky top-4 m-4 hidden h-[calc(100vh-2rem)] w-60 shrink-0 flex-col p-3 md:flex"
       >
-        <Link to="/" className="mb-4 px-3 pt-2 text-lg font-bold tracking-tight">
+        <Link
+          to="/"
+          className="mb-5 flex h-10 items-center gap-2.5 px-3 text-base font-bold tracking-tight"
+        >
+          <span className="flex size-7 items-center justify-center rounded-lg bg-accent text-white">
+            <Icon name="sparkles" size="sm" />
+          </span>
           [PROJECT_NAME]
         </Link>
-        <nav aria-label="メイン" className="flex flex-col gap-1">
+        <nav aria-label="メイン" className="flex flex-col gap-0.5">
           {nav.map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.to === '/'}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${isActive ? 'bg-accent-soft text-accent' : 'text-ink-soft hover:bg-white/70 hover:text-ink'}`
+                `flex h-10 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors ${isActive ? 'bg-accent-soft text-accent' : 'text-ink-soft hover:bg-white/70 hover:text-ink'}`
               }
             >
-              <span aria-hidden="true">{n.icon}</span>
+              <Icon name={n.icon} />
               {n.label}
               <Badge n={n.badge} />
             </NavLink>
           ))}
         </nav>
-        <footer className="mt-auto flex flex-col gap-1 px-3 pb-2 text-xs text-ink-soft">
-          <Link to="/legal/terms" className="hover:underline">
-            利用規約
-          </Link>
-          <Link to="/legal/privacy" className="hover:underline">
-            プライバシーポリシー
-          </Link>
-          <Link to="/legal/tokushoho" className="hover:underline">
-            特定商取引法に基づく表記
-          </Link>
-          <Link to="/report" className="hover:underline">
-            通報・削除申立
-          </Link>
+        <footer className="mt-auto flex flex-col gap-1.5 border-t border-white/80 px-3 pb-1 pt-4 text-xs text-ink-soft">
+          {LEGAL_LINKS.map((l) => (
+            <Link key={l.to} to={l.to} className="hover:text-ink hover:underline">
+              {l.label}
+            </Link>
+          ))}
         </footer>
       </aside>
 
@@ -82,23 +89,25 @@ export function Layout({
                 key={n.to}
                 to={n.to}
                 className={({ isActive }) =>
-                  `glass shrink-0 !rounded-full px-3 py-1 text-xs font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
+                  `glass flex h-8 shrink-0 items-center gap-1.5 !rounded-full px-3 text-xs font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
                 }
               >
+                <Icon name={n.icon} size="sm" />
                 {n.label}
               </NavLink>
             ))}
         </nav>
         <main
           id="main"
-          className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-4 md:pb-10 md:pt-6"
+          className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-4 md:px-6 md:pb-10 md:pt-6"
         >
           {children}
           <footer className="mt-10 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink-soft md:hidden">
-            <Link to="/legal/terms">利用規約</Link>
-            <Link to="/legal/privacy">プライバシーポリシー</Link>
-            <Link to="/legal/tokushoho">特定商取引法に基づく表記</Link>
-            <Link to="/report">通報・削除申立</Link>
+            {LEGAL_LINKS.map((l) => (
+              <Link key={l.to} to={l.to}>
+                {l.label}
+              </Link>
+            ))}
           </footer>
         </main>
       </div>
@@ -106,7 +115,7 @@ export function Layout({
       <nav
         data-testid="tabbar"
         aria-label="タブバー"
-        className="glass fixed inset-x-3 bottom-3 z-40 flex justify-around !rounded-2xl px-1 py-1.5 md:hidden"
+        className="glass glass-strong fixed inset-x-3 bottom-3 z-40 flex h-16 items-stretch justify-around !rounded-2xl px-1 md:hidden"
       >
         {nav
           .filter((n) => n.tab)
@@ -116,16 +125,14 @@ export function Layout({
               to={n.to}
               end={n.to === '/'}
               className={({ isActive }) =>
-                `relative flex min-w-14 flex-col items-center rounded-xl px-2 py-1 text-[11px] font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
+                `relative flex min-w-14 flex-1 flex-col items-center justify-center gap-1 rounded-xl text-xs font-medium ${isActive ? 'text-accent' : 'text-ink-soft'}`
               }
             >
-              <span aria-hidden="true" className="text-lg leading-6">
-                {n.icon}
-              </span>
+              <Icon name={n.icon} size="lg" />
               {n.label}
               {n.badge ? (
                 <span
-                  className="absolute right-1 top-0 size-2 rounded-full bg-accent"
+                  className="absolute right-[calc(50%-18px)] top-2 size-2 rounded-full bg-accent ring-2 ring-white"
                   aria-label={`未読 ${n.badge}件`}
                 />
               ) : null}

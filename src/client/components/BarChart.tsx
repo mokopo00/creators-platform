@@ -62,7 +62,7 @@ export function BarChart({ title, unit, data }: { title: string; unit: string; d
           );
         })}
       </svg>
-      <div className="flex justify-between text-[10px] text-ink-soft" aria-hidden="true">
+      <div className="flex justify-between text-xs text-ink-soft" aria-hidden="true">
         <span>{data[0]?.label}</span>
         <span>{data[data.length - 1]?.label}</span>
       </div>

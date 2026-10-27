@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FIELD_LABELS, FIELDS } from '../../shared/constants';
-import { ErrorState, PageTitle, PostGrid } from '../components/common';
+import { ErrorState, FilterChip, PageTitle, PostGrid } from '../components/common';
 import { api } from '../lib/api';
 import type { Post } from '../lib/types';
+import { buttonClass } from '../ui/Button';
+import { Icon } from '../ui/Icon';
 import { PageSkeleton } from '../ui/Skeleton';
 import { Tabs } from '../ui/Tabs';
 
@@ -36,10 +38,8 @@ export function HomePage() {
     <div data-testid="home-page">
       <PageTitle
         action={
-          <Link
-            to="/posts/new"
-            className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white"
-          >
+          <Link to="/posts/new" className={buttonClass('primary')}>
+            <Icon name="plus" />
             作品を投稿
           </Link>
         }
@@ -58,15 +58,9 @@ export function HomePage() {
         />
         <div role="group" aria-label="分野で絞り込み" className="flex flex-wrap gap-2">
           {['', ...FIELDS].map((f) => (
-            <button
-              key={f || 'all'}
-              type="button"
-              aria-pressed={field === f}
-              onClick={() => update('field', f)}
-              className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${field === f ? 'bg-accent text-white' : 'glass !rounded-full text-ink-soft hover:text-ink'}`}
-            >
+            <FilterChip key={f || 'all'} active={field === f} onClick={() => update('field', f)}>
               {f ? FIELD_LABELS[f as keyof typeof FIELD_LABELS] : 'すべて'}
-            </button>
+            </FilterChip>
           ))}
         </div>
         {tag && (

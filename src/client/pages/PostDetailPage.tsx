@@ -7,7 +7,8 @@ import { TranslateButton } from '../components/TranslateButton';
 import { useMe } from '../lib/auth';
 import { api, del, errorMessage, post } from '../lib/api';
 import type { Post } from '../lib/types';
-import { Button } from '../ui/Button';
+import { Button, buttonClass } from '../ui/Button';
+import { Icon } from '../ui/Icon';
 import { Modal } from '../ui/Modal';
 import { PageSkeleton } from '../ui/Skeleton';
 import { useToast } from '../ui/Toast';
@@ -71,7 +72,7 @@ export function PostDetailPage() {
           to={`/u/${p.author.handle}`}
           className="flex items-center gap-2 text-sm hover:underline"
         >
-          <Avatar name={p.author.displayName} url={p.author.avatarUrl} size={28} />
+          <Avatar name={p.author.displayName} url={p.author.avatarUrl} size="sm" />
           {p.author.displayName}
         </Link>
         {p.body && (
@@ -105,19 +106,18 @@ export function PostDetailPage() {
               aria-pressed={p.isFavorited}
               onClick={() => fav.mutate(!p.isFavorited)}
             >
-              {p.isFavorited ? '♥ お気に入り済み' : '♡ お気に入り'}
+              <Icon name="heart" filled={p.isFavorited} />
+              {p.isFavorited ? 'お気に入り済み' : 'お気に入り'}
             </Button>
           )}
           {loggedIn && <SaveToFolder postId={p.id} />}
           {q.data.isOwner && (
             <>
-              <Link
-                to={`/posts/${p.id}/edit`}
-                className="glass !rounded-full px-5 py-2 text-sm font-semibold"
-              >
+              <Link to={`/posts/${p.id}/edit`} className={buttonClass('secondary')}>
+                <Icon name="edit" />
                 編集
               </Link>
-              <Button variant="danger" onClick={() => setConfirmDelete(true)}>
+              <Button variant="danger" icon="trash" onClick={() => setConfirmDelete(true)}>
                 削除
               </Button>
             </>
@@ -125,8 +125,9 @@ export function PostDetailPage() {
           {!q.data.isOwner && (
             <Link
               to={`/report?type=post&id=${p.id}`}
-              className="ml-auto self-center text-xs text-ink-soft underline"
+              className={`${buttonClass('ghost', 'sm')} ml-auto self-center`}
             >
+              <Icon name="flag" size="sm" />
               通報する
             </Link>
           )}

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PageTitle } from '../components/common';
 import { api, errorMessage, post } from '../lib/api';
-import { Button } from '../ui/Button';
+import { Button, buttonClass } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { PageSkeleton } from '../ui/Skeleton';
 
@@ -29,7 +29,7 @@ export function LoginPage() {
         {providers.data?.google ? (
           <a
             href={`/api/auth/google/start?returnTo=${encodeURIComponent(returnTo)}`}
-            className="flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-ink shadow-[0_4px_16px_rgba(31,36,48,0.1)] hover:bg-white/90"
+            className={`${buttonClass('secondary')} w-full`}
             data-testid="google-login"
           >
             <span aria-hidden="true" className="font-bold text-accent">

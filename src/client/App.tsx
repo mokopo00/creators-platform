@@ -27,23 +27,23 @@ export function App() {
   const location = useLocation();
   const user = me.data?.user;
   const nav: NavItem[] = [
-    { to: '/', label: 'ホーム', icon: '⌂', tab: true },
-    { to: '/search', label: '探す', icon: '⌕', tab: true },
-    { to: '/ranking', label: 'ランキング', icon: '★' },
-    { to: '/requests', label: '依頼', icon: '✉', tab: true },
+    { to: '/', label: 'ホーム', icon: 'home', tab: true },
+    { to: '/search', label: '探す', icon: 'search', tab: true },
+    { to: '/ranking', label: 'ランキング', icon: 'trophy' },
+    { to: '/requests', label: '依頼', icon: 'inbox', tab: true },
     {
       to: '/notifications',
       label: '通知',
-      icon: '◔',
+      icon: 'bell',
       badge: me.data?.unreadNotifications,
       tab: true,
     },
-    { to: '/favorites', label: 'お気に入り', icon: '♡' },
+    { to: '/favorites', label: 'お気に入り', icon: 'heart' },
     user
-      ? { to: `/u/${user.handle}`, label: 'マイページ', icon: '☺', tab: true }
-      : { to: '/login', label: 'ログイン', icon: '→', tab: true },
-    { to: '/creator', label: 'クリエイター', icon: '▤' },
-    { to: '/settings', label: '設定', icon: '⚙' },
+      ? { to: `/u/${user.handle}`, label: 'マイページ', icon: 'user', tab: true }
+      : { to: '/login', label: 'ログイン', icon: 'login', tab: true },
+    { to: '/creator', label: 'クリエイター', icon: 'chart' },
+    { to: '/settings', label: '設定', icon: 'settings' },
   ];
 
   return (

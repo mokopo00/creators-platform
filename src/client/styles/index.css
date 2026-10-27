@@ -70,6 +70,11 @@ body {
   }
 }
 
+/* Floating bars over content (tab bar, chat panel) need more opacity for legibility. */
+.glass-strong {
+  --glass-bg: rgba(255, 255, 255, 0.8);
+}
+
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 2px;

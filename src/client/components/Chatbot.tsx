@@ -2,6 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { errorMessage, post } from '../lib/api';
+import { buttonClass } from '../ui/Button';
+import { Icon } from '../ui/Icon';
 import { Tabs } from '../ui/Tabs';
 
 type Msg = { from: 'user' | 'bot'; text: string; error?: boolean };
@@ -30,7 +32,7 @@ export function Chatbot() {
             initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
-            className="glass mb-3 flex h-[26rem] w-[min(22rem,calc(100vw-2rem))] flex-col p-3"
+            className="glass glass-strong mb-3 flex h-[26rem] w-[min(22rem,calc(100vw-2rem))] flex-col p-3"
           >
             <div className="mb-2 flex items-center justify-between">
               <Tabs
@@ -46,9 +48,9 @@ export function Chatbot() {
                 type="button"
                 aria-label="閉じる"
                 onClick={() => setOpen(false)}
-                className="px-2 text-xl text-ink-soft"
+                className="flex size-8 items-center justify-center rounded-full text-ink-soft hover:bg-white/70 hover:text-ink"
               >
-                ×
+                <Icon name="close" />
               </button>
             </div>
             <ol
@@ -90,11 +92,8 @@ export function Chatbot() {
                 }
                 className="flex-1 rounded-xl bg-white/70 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
               />
-              <button
-                type="submit"
-                className="rounded-full bg-accent px-4 text-sm font-semibold text-white"
-                disabled={m.isPending}
-              >
+              <button type="submit" className={buttonClass('primary', 'md')} disabled={m.isPending}>
+                <Icon name="send" size="sm" />
                 送信
               </button>
             </form>
@@ -108,9 +107,9 @@ export function Chatbot() {
         onClick={() => setOpen((o) => !o)}
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className="ml-auto flex size-12 items-center justify-center rounded-full bg-accent text-xl text-white shadow-[0_8px_24px_rgba(79,85,200,0.4)]"
+        className="ml-auto flex size-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_8px_24px_rgba(79,85,200,0.4)]"
       >
-        ?
+        <Icon name={open ? 'close' : 'help'} size="lg" />
       </motion.button>
     </div>
   );

@@ -5,7 +5,8 @@ import { Avatar, ErrorState, PostGrid } from '../components/common';
 import { TranslateButton } from '../components/TranslateButton';
 import { api, del, errorMessage, post, yen } from '../lib/api';
 import type { CreatorProfile } from '../lib/types';
-import { Button } from '../ui/Button';
+import { Button, buttonClass } from '../ui/Button';
+import { Icon } from '../ui/Icon';
 import { PageSkeleton } from '../ui/Skeleton';
 import { useToast } from '../ui/Toast';
 
@@ -41,7 +42,7 @@ export function ProfilePage() {
   return (
     <div data-testid="profile-page" className="flex flex-col gap-5">
       <section className="glass flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
-        <Avatar name={user.displayName} url={user.avatarUrl} size={80} />
+        <Avatar name={user.displayName} url={user.avatarUrl} size="xl" />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <h1 className="text-2xl font-bold">
             {user.decoration && <span aria-hidden="true">{user.decoration} </span>}
@@ -79,10 +80,8 @@ export function ProfilePage() {
         </div>
         <div className="flex flex-col gap-2 sm:items-end">
           {user.isSelf ? (
-            <Link
-              to="/settings"
-              className="glass !rounded-full px-5 py-2 text-center text-sm font-semibold"
-            >
+            <Link to="/settings" className={buttonClass('secondary')}>
+              <Icon name="edit" />
               プロフィールを編集
             </Link>
           ) : (
@@ -91,8 +90,9 @@ export function ProfilePage() {
                 <Link
                   to={`/u/${user.handle}/request`}
                   data-testid="request-button"
-                  className="rounded-full bg-accent px-6 py-2.5 text-center text-sm font-semibold text-white shadow-[0_6px_20px_rgba(79,85,200,0.35)]"
+                  className={buttonClass('primary')}
                 >
+                  <Icon name="send" />
                   依頼する
                 </Link>
               )}
@@ -110,7 +110,7 @@ export function ProfilePage() {
 
       {user.isCreator && settings.priceList.length > 0 && (
         <section className="glass p-5" aria-labelledby="price-heading">
-          <h2 id="price-heading" className="mb-3 font-bold">
+          <h2 id="price-heading" className="mb-3 text-base font-bold">
             料金表
           </h2>
           <ul className="flex flex-col divide-y divide-white/80">
@@ -130,7 +130,7 @@ export function ProfilePage() {
       )}
 
       <section aria-labelledby="works-heading">
-        <h2 id="works-heading" className="mb-3 text-lg font-bold">
+        <h2 id="works-heading" className="mb-3 text-base font-bold">
           ポートフォリオ
         </h2>
         <PostGrid posts={q.data.posts ?? []} />

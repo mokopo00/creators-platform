@@ -119,7 +119,7 @@ function ProfileForm({ data }: { data: CreatorProfile }) {
           {PORTFOLIO_THEMES.map((t) => (
             <label
               key={t}
-              className={`cursor-pointer rounded-full px-4 py-1.5 text-sm font-medium ${form.theme === t ? 'bg-accent text-white' : 'glass !rounded-full'}`}
+              className={`inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-xs font-semibold ${form.theme === t ? 'bg-accent text-white' : 'glass !rounded-full'}`}
             >
               <input
                 type="radio"
@@ -194,7 +194,7 @@ function CreatorForm({ data }: { data: CreatorProfile }) {
         onChange={(e) => setCapacity(Number(e.target.value))}
       />
       <section className="flex flex-col gap-2" aria-labelledby="pl">
-        <h2 id="pl" className="text-sm font-medium">
+        <h2 id="pl" className="text-sm font-medium text-ink">
           料金表
         </h2>
         <ul className="flex flex-col gap-1">
@@ -428,7 +428,7 @@ function AccountSection({ isAdult, isPremium }: { isAdult: boolean; isPremium: b
   return (
     <div className="flex flex-col gap-4">
       <section className="glass flex flex-col gap-3 p-5" aria-labelledby="age-h">
-        <h2 id="age-h" className="font-bold">
+        <h2 id="age-h" className="text-base font-bold">
           年齢確認
         </h2>
         {isAdult ? (
@@ -464,7 +464,7 @@ function AccountSection({ isAdult, isPremium }: { isAdult: boolean; isPremium: b
       </section>
 
       <section className="glass flex flex-col gap-3 p-5" aria-labelledby="pm-h">
-        <h2 id="pm-h" className="font-bold">
+        <h2 id="pm-h" className="text-base font-bold">
           プレミアム会員
         </h2>
         {premium.data && (
@@ -491,7 +491,7 @@ function AccountSection({ isAdult, isPremium }: { isAdult: boolean; isPremium: b
       </section>
 
       <section className="glass flex flex-col gap-3 p-5" aria-labelledby="acct-h">
-        <h2 id="acct-h" className="font-bold">
+        <h2 id="acct-h" className="text-base font-bold">
           アカウント
         </h2>
         <Button variant="secondary" className="self-start" onClick={() => logout.mutate()}>

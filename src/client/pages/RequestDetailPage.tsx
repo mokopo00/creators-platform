@@ -173,7 +173,7 @@ export function RequestDetailPage() {
 
       <aside className="flex flex-col gap-4">
         <section className="glass flex flex-col gap-2 p-4 text-sm" aria-labelledby="st-h">
-          <h2 id="st-h" className="font-bold">
+          <h2 id="st-h" className="text-base font-bold">
             依頼の状況
           </h2>
           <p>
@@ -267,7 +267,7 @@ export function RequestDetailPage() {
 
         {d.adjustments.length > 0 && (
           <section className="glass p-4 text-xs" aria-labelledby="adj-h">
-            <h2 id="adj-h" className="mb-2 text-sm font-bold">
+            <h2 id="adj-h" className="mb-2 text-base font-bold">
               減額の履歴
             </h2>
             <ul className="flex flex-col gap-1">
@@ -443,7 +443,7 @@ function PauseSection({
 
   return (
     <section className="glass flex flex-col gap-3 p-4 text-sm" aria-labelledby="pause-h">
-      <h2 id="pause-h" className="font-bold">
+      <h2 id="pause-h" className="text-base font-bold">
         正当な理由による遅延の申告
       </h2>
       {detail.pauses.length > 0 && (

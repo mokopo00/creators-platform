@@ -40,7 +40,7 @@ export function CreatorToolsPage() {
       <PageTitle>クリエイターツール</PageTitle>
       <section aria-labelledby="an-h" className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 id="an-h" className="text-lg font-bold">
+          <h2 id="an-h" className="text-base font-bold">
             詳細分析
           </h2>
           <Tabs
@@ -125,7 +125,7 @@ function Promotions({ handle }: { handle: string }) {
 
   return (
     <section className="glass flex flex-col gap-3 p-5" aria-labelledby="pr-h">
-      <h2 id="pr-h" className="text-lg font-bold">
+      <h2 id="pr-h" className="text-base font-bold">
         上位表示の予約
       </h2>
       <p className="text-xs text-ink-soft">
@@ -212,7 +212,7 @@ function Products() {
   });
   return (
     <section className="glass flex flex-col gap-3 p-5" aria-labelledby="dp-h">
-      <h2 id="dp-h" className="text-lg font-bold">
+      <h2 id="dp-h" className="text-base font-bold">
         デジタル販売（準備中）
       </h2>
       {q.data && (

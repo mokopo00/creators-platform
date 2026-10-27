@@ -26,7 +26,7 @@ export function RequestPage() {
   return (
     <div className="flex flex-col gap-4" data-testid="request-page">
       <header className="glass flex items-center gap-3 p-5">
-        <Avatar name={user.displayName} url={user.avatarUrl} size={48} />
+        <Avatar name={user.displayName} url={user.avatarUrl} size="lg" />
         <div>
           <h1 className="text-xl font-bold">{user.displayName} さんへの依頼</h1>
           <p className="text-sm text-ink-soft">
@@ -39,7 +39,7 @@ export function RequestPage() {
       </header>
 
       <section className="glass p-5" aria-labelledby="prices">
-        <h2 id="prices" className="mb-2 font-bold">
+        <h2 id="prices" className="mb-2 text-base font-bold">
           料金表
         </h2>
         {settings.priceList.length === 0 ? (
@@ -58,7 +58,7 @@ export function RequestPage() {
 
       {settings.samples.length > 0 && (
         <section aria-labelledby="samples">
-          <h2 id="samples" className="mb-2 font-bold">
+          <h2 id="samples" className="mb-2 text-base font-bold">
             商品サンプル
           </h2>
           <PostGrid posts={settings.samples} />
@@ -66,7 +66,7 @@ export function RequestPage() {
       )}
 
       <section className="glass p-5 text-sm" aria-labelledby="notes">
-        <h2 id="notes" className="mb-2 font-bold">
+        <h2 id="notes" className="mb-2 text-base font-bold">
           注意事項
         </h2>
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
@@ -140,7 +140,7 @@ function RequestForm({ data }: { data: CreatorProfile }) {
         m.mutate();
       }}
     >
-      <h2 className="text-lg font-bold">依頼内容</h2>
+      <h2 className="text-base font-bold">依頼内容</h2>
       {data.templates.length > 0 && (
         <Select
           label="依頼テンプレート"

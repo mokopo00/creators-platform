@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 const fieldClass =
-  'w-full rounded-xl border border-white/90 bg-white/70 px-3 py-2 text-ink shadow-[inset_0_1px_2px_rgba(31,36,48,0.06)] placeholder:text-ink-soft/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40';
+  'w-full rounded-xl border text-sm border-white/90 bg-white/70 px-3 py-2 text-ink shadow-[inset_0_1px_2px_rgba(31,36,48,0.06)] placeholder:text-ink-soft/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40';
 
 function Field({
   id,
@@ -60,7 +60,7 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
           id={fid}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy(fid, hint, error)}
-          className={`${fieldClass} ${className}`}
+          className={`${fieldClass} h-10 ${className}`}
           {...rest}
         />
       </Field>
@@ -96,7 +96,7 @@ export const Select = forwardRef<
   const fid = id ?? auto;
   return (
     <Field id={fid} label={label} hint={hint} error={error}>
-      <select ref={ref} id={fid} className={`${fieldClass} ${className}`} {...rest}>
+      <select ref={ref} id={fid} className={`${fieldClass} h-10 ${className}`} {...rest}>
         {children}
       </select>
     </Field>

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FIELD_LABELS, FIELDS } from '../../shared/constants';
-import { ErrorState, PageTitle, PostCard } from '../components/common';
+import { EmptyState, ErrorState, FilterChip, PageTitle, PostCard } from '../components/common';
 import { api } from '../lib/api';
 import type { Post } from '../lib/types';
 import { staggerContainer } from '../ui/motion';
@@ -55,42 +55,34 @@ export function RankingPage() {
         />
         <div role="group" aria-label="分野" className="flex flex-wrap gap-2">
           {['', ...FIELDS].map((f) => (
-            <button
+            <FilterChip
               key={f || 'all'}
-              type="button"
-              aria-pressed={field === f && !tag}
+              active={field === f && !tag}
               onClick={() => set('field', f)}
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${field === f && !tag ? 'bg-accent text-white' : 'glass !rounded-full text-ink-soft'}`}
             >
               {f ? FIELD_LABELS[f as keyof typeof FIELD_LABELS] : '総合'}
-            </button>
+            </FilterChip>
           ))}
         </div>
         {q.data.popularTags.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-xs text-ink-soft">ハッシュタグ別:</span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs text-ink-soft">ハッシュタグ別</span>
             {q.data.popularTags.map((t) => (
-              <button
-                key={t}
-                type="button"
-                aria-pressed={tag === t}
-                onClick={() => set('tag', t)}
-                className={`rounded-full px-2 py-0.5 text-xs font-semibold ${tag === t ? 'bg-accent text-white' : 'text-accent hover:underline'}`}
-              >
+              <FilterChip key={t} active={tag === t} onClick={() => set('tag', t)}>
                 #{t}
-              </button>
+              </FilterChip>
             ))}
           </div>
         )}
       </div>
       {q.data.items.length === 0 ? (
-        <p className="glass p-6 text-center text-sm text-ink-soft">
+        <EmptyState>
           集計対象の作品はまだありません。
           <Link to="/" className="text-accent underline">
             新着
           </Link>
           を見る
-        </p>
+        </EmptyState>
       ) : (
         <motion.ol
           variants={staggerContainer}

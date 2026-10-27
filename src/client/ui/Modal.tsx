@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { Icon } from './Icon';
 
 export function Modal({
   open,
@@ -53,16 +54,16 @@ export function Modal({
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
-              <h2 id={titleId} className="text-lg font-bold">
+              <h2 id={titleId} className="text-base font-bold">
                 {title}
               </h2>
               <button
                 type="button"
                 aria-label="閉じる"
                 onClick={onClose}
-                className="rounded-full px-2 text-xl text-ink-soft hover:bg-white/70"
+                className="flex size-8 items-center justify-center rounded-full text-ink-soft hover:bg-white/70 hover:text-ink"
               >
-                ×
+                <Icon name="close" />
               </button>
             </div>
             {children}
